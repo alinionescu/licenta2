@@ -1,0 +1,14 @@
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+avanzu_admin_profile:
+    defaults: { _controller: "AppBundle:Security:show" }
+    path: /profile
+
+avanzu_admin_logout:
+    defaults: { _controller: "FOSUserBundle:Security:logout" }
+    path: /logout
