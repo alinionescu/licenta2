@@ -28,7 +28,7 @@ class User extends BaseUser implements ThemeUser
     protected $id;
 
     /**
-     * @Assert\File(maxSize="2048k")
+     * @Assert\File(maxSize="4096k")
      * @Assert\Image(mimeTypesMessage="Please upload a valid image.")
      */
     protected $profilePictureFile;
@@ -158,7 +158,7 @@ class User extends BaseUser implements ThemeUser
 
     public function getAvatar()
     {
-        return "no avatar";
+        return $this->profilePicturePath;
     }
 
     public function getName()

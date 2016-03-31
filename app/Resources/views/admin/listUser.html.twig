@@ -1,0 +1,19 @@
+{% extends '::layout.html.twig' %}
+
+{% block page_title %}
+    Admin
+{% endblock %}
+
+{% block page_subtitle %}
+    Lista useri
+{% endblock %}
+
+{% block page_content %}
+    {% for user in users %}
+        <ul>
+            <li>{{ user.getName }}</li>
+        </ul>
+
+    {% endfor %}
+    <button class="btn btn-default" data-toggle="control-sidebar">Toggle Right Sidebar</button>
+{% endblock %}

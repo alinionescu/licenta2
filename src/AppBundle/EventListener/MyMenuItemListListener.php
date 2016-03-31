@@ -8,19 +8,25 @@
 
 namespace AppBundle\EventListener;
 
+use AppBundle\Entity\User;
 use AppBundle\Model\MenuItemModel;
 use Avanzu\AdminThemeBundle\Event\SidebarMenuEvent;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
 class MyMenuItemListListener
 {
     /** @var TokenStorage */
     private $tokenStorage;
 
-    public function __construct(TokenStorage $tokenStorage)
+    /** @var AuthorizationChecker */
+    private $authorizationChecker;
+
+    public function __construct(TokenStorage $tokenStorage, AuthorizationChecker $authorizationChecker)
     {
         $this->tokenStorage = $tokenStorage;
+        $this->authorizationChecker = $authorizationChecker;
     }
 
     /**
@@ -73,21 +79,46 @@ class MyMenuItemListListener
      */
     protected function getMeniuItemByRole()
     {
-        $menuItems = [
-            $blog = new MenuItemModel('ItemId', 'ItemDisplayName', 'fos_user_security_login', array(/* options */), 'iconclasses fa fa-plane'),
-            $action = new MenuItemModel('actionId', 'Action', 'fos_user_security_login', array(), 'fa fa-rss-square')
-        ];
+        $menuItems = [];
 
-        $user = $this->tokenStorage->getToken()->getUser();
+        if ($this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
+            /** Meniu pentru Admin */
+            if ($this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) {
+                $admin = new MenuItemModel('AdministrareUtilizatori', 'Administrare utilizatori', '', array(/* options */), 'iconclasses fa fa-plane');
+                $admin->addChild(new MenuItemModel('AdaugaUtilizator', 'Adauga utilizator', 'admin_add_user'));
+                $admin->addChild(new MenuItemModel('StergeUtilizator', 'Sterge utilizator', 'fos_user_security_login'));
+                $admin->addChild(new MenuItemModel('PromoteUtilizator', 'Promote utilizator', 'admin_promote_user'));
 
-        if ($user == 'anon.') {
+                array_push($menuItems, $admin);
+            }
+
+            /** Meniu pentru Profesor */
+            if ($this->authorizationChecker->isGranted('ROLE_ADMIN')) {
+                $profesor = new MenuItemModel('Profesor', 'Profesor', 'fos_user_security_login', array(/* options */), 'iconclasses fa fa-plane');
+
+                array_push($menuItems, $profesor);
+            }
+
+            /** Meniu pentru Student */
+            if ($this->authorizationChecker->isGranted('ROLE_USER')) {
+                $student = new MenuItemModel('Student', 'Student', 'fos_user_security_login', array(/* options */), 'iconclasses fa fa-plane');
+
+                array_push($menuItems, $student);
+            }
+
+            $blog = new MenuItemModel('ItemId', 'Primul item', '', array(/* options */), 'iconclasses fa fa-plane');
+            $action = new MenuItemModel('actionId', 'Action', 'fos_user_security_login', array(), 'fa fa-rss-square');
+
+            // A child with default circle icon
+            $blog->addChild(new MenuItemModel('ChildTwoItemId', 'ChildTwoDisplayName', 'fos_user_security_login'));
+
+             array_push($menuItems, $blog);
+             array_push($menuItems, $action);
+
+        } else {
             $login = new MenuItemModel('loginId', 'Login', 'fos_user_security_login', array(/* options */), 'iconclasses fa fa-plane');
             array_push($menuItems, $login);
         }
-        // Add some children
-
-        // A child with default circle icon
-        $blog->addChild(new MenuItemModel('ChildTwoItemId', 'ChildTwoDisplayName', 'fos_user_security_login'));
 
         return $menuItems;
     }

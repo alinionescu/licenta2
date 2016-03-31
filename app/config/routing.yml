@@ -2,6 +2,14 @@ app:
     resource: "@AppBundle/Controller/"
     type:     annotation
 
+admin_add_user:
+    defaults: { _controller: "AppBundle:Admin:addUser" }
+    path: /add
+
+admin_promote_user:
+    defaults: { _controller: "AppBundle:Admin:promoteUser" }
+    path: /promote-user
+
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
 
