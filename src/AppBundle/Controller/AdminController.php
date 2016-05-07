@@ -14,15 +14,22 @@ use Symfony\Component\HttpFoundation\Request;
 
 class AdminController extends Controller
 {
+    /**
+     * @return type
+     */
     public function addUserAction()
     {
         return $this->redirectToRoute('fos_user_registration_register');
     }
 
-    public function promoteUserAction(Request $request)
+    /**
+     * @param Request $request
+     * @return type
+     */
+    public function promoteUserListAction(Request $request)
     {
         /** @var UserRepository $userRepository */
-        $userRepository = $this->container->get('doctrine')->getEntityManager()->getRepository('AppBundle:User');
+        $userRepository = $this->container->get('doctrine')->getManager()->getRepository('AppBundle:User');
 
         $users = $userRepository->findAll();
 
@@ -31,5 +38,15 @@ class AdminController extends Controller
                 'users' => $users
             )
         );
+    }
+    
+    public function promoteUserAction(Request $request)
+    {
+        
+    }
+    
+    public function demoteUserAction(Request $request)
+    {
+        
     }
 }

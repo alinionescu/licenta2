@@ -6,9 +6,17 @@ admin_add_user:
     defaults: { _controller: "AppBundle:Admin:addUser" }
     path: /add
 
+admin_promote_user_list:
+    defaults: { _controller: "AppBundle:Admin:promoteUserList" }
+    path: /promote-user-list
+    
 admin_promote_user:
     defaults: { _controller: "AppBundle:Admin:promoteUser" }
     path: /promote-user
+    
+admin_demote_user:
+    defaults: { _controller: "AppBundle:Admin:demoteUser" }
+    path: /demote-user
 
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"

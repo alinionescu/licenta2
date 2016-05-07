@@ -9,11 +9,31 @@
 {% endblock %}
 
 {% block page_content %}
-    {% for user in users %}
-        <ul>
-            <li>{{ user.getName }}</li>
-        </ul>
-
-    {% endfor %}
-    <button class="btn btn-default" data-toggle="control-sidebar">Toggle Right Sidebar</button>
+    <div class="panel panel-default">
+        <div class="panel-body">Promote Users</div>
+    </div>
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>UserName</th>
+                <th>Email</th>
+                <th>Roles</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+    {% for user in users %}            
+        <tr>
+            <td>{{ user.getUserName }}</td>
+            <td>{{ user.getEmail }}</td>
+            <td>{% for role in user.getRoles %} | {{ role }} | {% endfor %} </td>
+            <td>
+                <a href="{{ path('admin_promote_user') }}" class="btn btn-default" data-toggle="control-sidebar">Promote</a>
+                <a href="{{ path('admin_promote_user') }}" class="btn btn-danger" data-toggle="control-sidebar">Demote</a>
+            </td>
+        </tr>
+    {% endfor %}  
+        </tbody>
+    </table>
 {% endblock %}
