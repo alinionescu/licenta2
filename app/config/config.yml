@@ -40,7 +40,11 @@ twig:
         admin_skin: "%admin_skin%"
 
 assetic:
+    debug:          %kernel.debug%
     use_controller: false
+    bundles:        [AppBundle]
+    filters:
+        cssrewrite: ~
 
 fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'

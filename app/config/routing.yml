@@ -11,12 +11,16 @@ admin_promote_user_list:
     path: /promote-user-list
     
 admin_promote_user:
-    defaults: { _controller: "AppBundle:Admin:promoteUser" }
-    path: /promote-user
+    defaults: { _controller: "AppBundle:Admin:promoteUser", id: 0 ,role: "ROLE_USER" }
+    path: /promote-user/{id}/{role}/
+
+admin_edit_user:
+    defaults: { _controller: "AppBundle:Admin:editUser" }
+    path: /edit-user
     
 admin_demote_user:
-    defaults: { _controller: "AppBundle:Admin:demoteUser" }
-    path: /demote-user
+    defaults: { _controller: "AppBundle:Admin:demoteUser",  id: 0 ,role: "ROLE_USER" }
+    path: /demote-user/{id}/{role}/
 
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"

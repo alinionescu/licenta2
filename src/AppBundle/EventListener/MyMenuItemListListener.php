@@ -87,6 +87,7 @@ class MyMenuItemListListener
                 $admin = new MenuItemModel('AdministrareUtilizatori', 'Administrare utilizatori', '', array(/* options */), 'iconclasses fa fa-plane');
                 $admin->addChild(new MenuItemModel('AdaugaUtilizator', 'Adauga utilizator', 'admin_add_user'));
                 $admin->addChild(new MenuItemModel('StergeUtilizator', 'Sterge utilizator', 'fos_user_security_login'));
+                $admin->addChild(new MenuItemModel('EditeazaUtilizator', 'Editeaza utilizator', 'fos_user_security_login'));
                 $admin->addChild(new MenuItemModel('PromoteUtilizator', 'Promote utilizator', 'admin_promote_user_list'));
 
                 array_push($menuItems, $admin);

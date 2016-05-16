@@ -21,11 +21,24 @@ use Doctrine\ORM\Mapping as ORM;
 class User extends BaseUser implements ThemeUser
 {
     /**
+     * @var integer
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+    /**
+     * @var string
+     * @ORM\Column(name="full_name", type="string", length=64, nullable=false)
+     */
+    protected $fullName;
+
+    /**
+     * @var integer
+     * @ORM\Column(name="id_matricol", type="integer", nullable=false)
+     */
+    protected $matricol;
 
     /**
      * @Assert\File(maxSize="4096k")
@@ -43,6 +56,54 @@ class User extends BaseUser implements ThemeUser
     public function __construct()
     {
         parent::__construct();
+    }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMatricol()
+    {
+        return $this->matricol;
+    }
+
+    /**
+     * @param int $matricol
+     */
+    public function setMatricol($matricol)
+    {
+        $this->matricol = $matricol;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFullName()
+    {
+        return $this->fullName;
+    }
+
+    /**
+     * @param mixed $fullName
+     */
+    public function setFullName($fullName)
+    {
+        $this->fullName = $fullName;
     }
 
     /**
@@ -185,5 +246,4 @@ class User extends BaseUser implements ThemeUser
     {
         return "MR.";
     }
-
 }
