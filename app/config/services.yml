@@ -4,6 +4,7 @@ parameters:
     my_admin_bundle.show_user_listener.class: AppBundle\EventListener\MyShowUserListener
     my_admin_bundle.menu_listener.class: AppBundle\EventListener\MyMenuItemListListener
     registration.form.type.class: AppBundle\Form\RegistrationFormType
+    app_document.class: AppBundle\Service\DocumentService
 
 services:
     my_admin_bundle.show_user_listener:
@@ -23,3 +24,6 @@ services:
         arguments: [%fos_user.model.user.class%]
         tags:
             - { name: form.type, alias: frontend_user_registration }
+
+    app_document:
+        class: %app_document.class%

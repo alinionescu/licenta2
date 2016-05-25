@@ -37,7 +37,7 @@
         <tbody>
     {% for user in users %}            
         <tr>
-            <td>{{ user.getFullName }}</td>
+            <td>{{ user.getUserName }}</td>
             <td>{{ user.getUserName }}</td>
             <td>{{ user.getEmail }}</td>
             <td>{% for role in user.getRoles %} | {{ role }} | {% endfor %} </td>

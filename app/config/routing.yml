@@ -23,7 +23,11 @@ admin_demote_user:
     path: /demote-user/{id}/{role}/
 
 fos_user:
-    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+app_registration:
+    defaults: { _controller: "AppBundle:Registration:register" }
+    path: /register/
 
 avanzu_admin_profile:
     defaults: { _controller: "AppBundle:Security:show" }
@@ -32,3 +36,7 @@ avanzu_admin_profile:
 avanzu_admin_logout:
     defaults: { _controller: "FOSUserBundle:Security:logout" }
     path: /logout
+
+app_edit_document:
+    defaults: { _controller: "AppBundle:Default:editDocument" }
+    path: /edit-document

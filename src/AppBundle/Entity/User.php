@@ -16,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="`user`")
+ * @ORM\Table(name="user")
  */
 class User extends BaseUser implements ThemeUser
 {
@@ -29,16 +29,10 @@ class User extends BaseUser implements ThemeUser
     protected $id;
 
     /**
-     * @var string
-     * @ORM\Column(name="full_name", type="string", length=64, nullable=false)
+     * @var Person
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Person", cascade={"persist"}, mappedBy="user", fetch="EXTRA_LAZY")
      */
-    protected $fullName;
-
-    /**
-     * @var integer
-     * @ORM\Column(name="id_matricol", type="integer", nullable=false)
-     */
-    protected $matricol;
+    protected $person;
 
     /**
      * @Assert\File(maxSize="4096k")
@@ -68,42 +62,50 @@ class User extends BaseUser implements ThemeUser
 
     /**
      * @param int $id
+     * @return User
      */
     public function setId($id)
     {
         $this->id = $id;
+        return $this;
     }
 
     /**
-     * @return int
+     * @return Person
      */
-    public function getMatricol()
+    public function getPerson()
     {
-        return $this->matricol;
+        return $this->person;
     }
 
     /**
-     * @param int $matricol
+     * @param Person $person
+     * @return User
      */
-    public function setMatricol($matricol)
+    public function setPerson($person)
     {
-        $this->matricol = $matricol;
+        $person->setUser($this);
+        $this->person = $person;
+
+        return $this;
     }
 
     /**
      * @return mixed
      */
-    public function getFullName()
+    public function getTempProfilePicturePath()
     {
-        return $this->fullName;
+        return $this->tempProfilePicturePath;
     }
 
     /**
-     * @param mixed $fullName
+     * @param mixed $tempProfilePicturePath
+     * @return User
      */
-    public function setFullName($fullName)
+    public function setTempProfilePicturePath($tempProfilePicturePath)
     {
-        $this->fullName = $fullName;
+        $this->tempProfilePicturePath = $tempProfilePicturePath;
+        return $this;
     }
 
     /**

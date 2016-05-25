@@ -29,4 +29,11 @@ class DefaultController extends Controller
 
         return $this->render(':admin:index.html.twig');
     }
+
+    public function editDocumentAction(Request $request)
+    {
+        return $this->render('::edit-document.html.twig', [
+            'documents' => []
+        ]);
+    }
 }

@@ -8,6 +8,7 @@
 
 namespace AppBundle\EventListener;
 
+use AppBundle\Entity\PersonType;
 use AppBundle\Entity\User;
 use AppBundle\Model\MenuItemModel;
 use Avanzu\AdminThemeBundle\Event\SidebarMenuEvent;
@@ -82,8 +83,13 @@ class MyMenuItemListListener
         $menuItems = [];
 
         if ($this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
+            /** @var User $user */
+            $user = $this->tokenStorage->getToken()->getUser();
+
+            $type = $user->getPerson()->getPersonType()->getId();
+
             /** Meniu pentru Admin */
-            if ($this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) {
+            if ($type === PersonType::PERSON_TYPE_ADMIN) {
                 $admin = new MenuItemModel('AdministrareUtilizatori', 'Administrare utilizatori', '', array(/* options */), 'iconclasses fa fa-plane');
                 $admin->addChild(new MenuItemModel('AdaugaUtilizator', 'Adauga utilizator', 'admin_add_user'));
                 $admin->addChild(new MenuItemModel('StergeUtilizator', 'Sterge utilizator', 'fos_user_security_login'));
@@ -94,14 +100,14 @@ class MyMenuItemListListener
             }
 
             /** Meniu pentru Profesor */
-            if ($this->authorizationChecker->isGranted('ROLE_ADMIN')) {
+            if ($type === PersonType::PERSON_TYPE_PROFESOR) {
                 $profesor = new MenuItemModel('Profesor', 'Profesor', 'fos_user_security_login', array(/* options */), 'iconclasses fa fa-plane');
 
                 array_push($menuItems, $profesor);
             }
 
             /** Meniu pentru Student */
-            if ($this->authorizationChecker->isGranted('ROLE_USER')) {
+            if ($type === PersonType::PERSON_TYPE_STUDENT) {
                 $student = new MenuItemModel('Student', 'Student', 'fos_user_security_login', array(/* options */), 'iconclasses fa fa-plane');
 
                 array_push($menuItems, $student);
