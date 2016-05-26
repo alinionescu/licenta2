@@ -22,7 +22,8 @@ class Meetings
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\MeetingLine", mappedBy="meetings", fetch="EXTRA_LAZY", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\MeetingLine", mappedBy="meeting", indexBy="id", fetch="EXTRA_LAZY", cascade={"persist"})
+     * @ORM\JoinColumn(name="id", referencedColumnName="meeting")
      */
     protected $meetingLine;
 
@@ -42,6 +43,11 @@ class Meetings
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Person", mappedBy="meetings")
      */
     protected $persons;
+
+    public function __construct()
+    {
+        $this->meetingLine = new ArrayCollection();
+    }
 
     /**
      * @return int
@@ -131,5 +137,15 @@ class Meetings
     {
         $this->persons = $persons;
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function prePersist()
+    {
+        if (!$this->getCreated()) {
+            $this->created = new \DateTime();
+        }
     }
 }

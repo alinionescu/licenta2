@@ -101,7 +101,7 @@ class MyMenuItemListListener
 
             /** Meniu pentru Profesor */
             if ($type === PersonType::PERSON_TYPE_PROFESOR) {
-                $profesor = new MenuItemModel('Profesor', 'Profesor', 'fos_user_security_login', array(/* options */), 'iconclasses fa fa-plane');
+                $profesor = new MenuItemModel('DocumenteLicenta', 'Documente licenta', 'app_list_document', array(/* options */), 'iconclasses fa fa-plane');
 
                 array_push($menuItems, $profesor);
             }

@@ -11,9 +11,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class PersonType
 {
-    const PERSON_TYPE_STUDENT = 1;
+    const PERSON_TYPE_ADMIN = 1;
     const PERSON_TYPE_PROFESOR = 2;
-    const PERSON_TYPE_ADMIN = 3;
+    const PERSON_TYPE_STUDENT = 3;
 
     /**
      * @var integer

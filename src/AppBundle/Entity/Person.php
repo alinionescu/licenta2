@@ -34,7 +34,7 @@ class Person
 
     /**
      * @var Document
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Document", inversedBy="student", fetch="EXTRA_LAZY")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Document", inversedBy="person", fetch="EXTRA_LAZY")
      * @ORM\JoinColumn(name="id_document", referencedColumnName="id")
      */
     protected $document;

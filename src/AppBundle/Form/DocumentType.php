@@ -15,14 +15,10 @@ class DocumentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('description')
-            ->add('option')
-            ->add('status')
-            ->add('created', 'datetime')
-            ->add('modified', 'datetime')
-            ->add('person')
-        ;
+            ->add('name', 'Symfony\Component\Form\Extension\Core\Type\TextType')
+            ->add('description', 'Symfony\Component\Form\Extension\Core\Type\TextType')
+            ->add('option', 'Symfony\Component\Form\Extension\Core\Type\TextType')
+            ->add('status');
     }
     
     /**

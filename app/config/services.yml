@@ -5,6 +5,7 @@ parameters:
     my_admin_bundle.menu_listener.class: AppBundle\EventListener\MyMenuItemListListener
     registration.form.type.class: AppBundle\Form\RegistrationFormType
     app_document.class: AppBundle\Service\DocumentService
+    app_document_type.class: AppBundle\Form\DocumentType
 
 services:
     my_admin_bundle.show_user_listener:
@@ -27,3 +28,7 @@ services:
 
     app_document:
         class: %app_document.class%
+        arguments: [ '@doctrine.orm.entity_manager' ]
+
+    app_document_type:
+        class: %app_document_type.class%

@@ -14,26 +14,26 @@ class Document
     /**
      * @var integer
      * @ORM\Id
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=64, nullable=false)
+     * @ORM\Column(name="name", type="string", length=64, nullable=false)
      */
     protected $name;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\Column(name="description", type="string", length=255, nullable=false)
      */
     protected $description;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\Column(name="options", type="string", length=255, nullable=false)
      */
     protected $option;
 
@@ -46,6 +46,7 @@ class Document
     /**
      * @var Person
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\Person", mappedBy="document", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="id", referencedColumnName="id")
      */
     protected $person;
 
@@ -67,16 +68,6 @@ class Document
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @param int $id
-     * @return Document
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-        return $this;
     }
 
     /**
@@ -203,5 +194,15 @@ class Document
     {
         $this->modified = $modified;
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function prePersist()
+    {
+        if ($this->getCreated() === null) {
+            $this->created = new \DateTime();
+        }
     }
 }

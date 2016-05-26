@@ -28,10 +28,10 @@ class MeetingLine
     /**
      * @var Meetings
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Meetings", inversedBy="meetingLines", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="id_meeting", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Meetings", inversedBy="meetingLine", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="meeting", referencedColumnName="id")
      */
-    protected $meetings;
+    protected $meeting;
 
     /**
      * @var \DateTime
@@ -133,5 +133,15 @@ class MeetingLine
     {
         $this->modified = $modified;
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function prePersist()
+    {
+        if (!$this->getCreated()) {
+            $this->created = new \DateTime();
+        }
     }
 }
